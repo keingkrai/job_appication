@@ -50,7 +50,7 @@ const Jobtable = () => {
     }
   };
 
-  // 🟢 แก้ไขจุดที่ 1 & 2: รวมฟังก์ชัน Filter และ Sort ให้เหลือรอบเดียว และเอาโค้ด Pagination ออกมาด้านนอกสโคป
+  // 🟢 รวมฟังก์ชัน Filter และ Sort ให้เหลือรอบเดียว และเอาโค้ด Pagination ออกมาด้านนอกสโคป
   const filteredAndSortedJobs = jobs
     .filter((job) => {
       const matchesName = job.name
@@ -72,7 +72,7 @@ const Jobtable = () => {
       return 0;
     });
 
-  // 🟢 ย้ายโค้ดชุดคำนวณแบ่งหน้า Pagination ออกมาอยู่ตรงนี้ (ทำให้ทั้งแอปเข้าถึงตัวแปรเหล่านี้ได้จริง)
+  // 🟢 ชุดคำนวณแบ่งหน้า Pagination 
   const totalItems = filteredAndSortedJobs.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -120,19 +120,21 @@ const Jobtable = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-4">
+      {/* 🟢 ปรับตรง Container หัวข้อและปุ่มควบคุมให้ลื่นไหลทุกขนาดจอมากขึ้น */}
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">
+        <h2 className="text-2xl font-bold text-gray-800 text-center lg:text-left">
           รายการสมัครงาน (Job Applications)
         </h2>
 
-        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+        {/* กล่องกลุ่มตัวเลือก Search / Filter / Sort / Button */}
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-center gap-3 w-full lg:w-auto">
           {/* ช่อง Search บล็อกชื่อ */}
           <input
             type="text"
             placeholder="🔍 ค้นหาด้วยชื่อ"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto min-w-[200px]"
+            className="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto sm:min-w-[200px]"
           />
 
           {/* ช่อง Filter สถานะ */}
@@ -159,16 +161,10 @@ const Jobtable = () => {
           </select>
 
           {/* กลุ่มปุ่มคำสั่ง */}
-          <div className="flex space-x-2 w-full sm:w-auto justify-end">
-            {/* <button
-              onClick={fetchJobs}
-              className="px-4 py-2 bg-gray-800 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition"
-            >
-              รีเฟรชข้อมูล
-            </button> */}
+          <div className="flex space-x-2 w-full sm:w-auto justify-center sm:justify-end">
             <button
               onClick={() => openModal("insert")}
-              className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-500 transition"
+              className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-500 transition w-full sm:w-auto"
             >
               เพิ่มข้อมูล
             </button>
@@ -196,7 +192,6 @@ const Jobtable = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 text-gray-700 text-sm">
-              {/* 🟢 แก้ไขจุดที่ 3: ตรวจสอบความยาวและทำการวนลูป (map) ผ่านข้อมูลที่แบ่งหน้าแล้ว (currentDisplayedJobs) */}
               {currentDisplayedJobs.length === 0 ? (
                 <tr>
                   <td colSpan="8" className="py-8 text-center text-gray-400">
@@ -261,12 +256,12 @@ const Jobtable = () => {
       {/* แถบควบคุมการเปลี่ยนหน้า Pagination */}
       {!loading && totalItems > 0 && (
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 px-2">
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-gray-500 text-center sm:text-left">
             แสดง {indexOfFirstItem + 1} ถึง {Math.min(indexOfLastItem, totalItems)} จากทั้งหมด{" "}
             <span className="font-semibold text-gray-700">{totalItems}</span> รายการ
           </div>
 
-          <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-1 flex-wrap justify-center gap-y-2">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
