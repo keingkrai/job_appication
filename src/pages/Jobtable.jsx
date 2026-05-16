@@ -120,7 +120,7 @@ const Jobtable = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-4">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 mb-6">
         <h2 className="text-2xl font-bold text-gray-800">
           รายการสมัครงาน (Job Applications)
         </h2>
@@ -182,7 +182,7 @@ const Jobtable = () => {
         </div>
       ) : (
         <div className="overflow-x-auto rounded-xl shadow-md border border-gray-200">
-          <table className="w-full text-left border-collapse bg-white">
+          <table className="w-full text-left border-collapse bg-white min-w-[800px]">
             <thead className="bg-gray-800 text-white text-sm uppercase tracking-wider">
               <tr>
                 <th className="py-4 px-6 font-semibold">ชื่อ</th>
